@@ -41,7 +41,7 @@ public class Player extends Entitiy {
 
             walkDownFrames[index] = spriteSheet.getSubimage(
                 index * 48,
-                0 * 40, //row 0
+                4 * 40, //row 5
                 48, 
                 40
 
@@ -62,7 +62,7 @@ public class Player extends Entitiy {
 
             walkUpFrames[index] = spriteSheet.getSubimage(
                 index * 48,
-                3 * 40, //row 3
+                6 * 40, //row 3
                 48, 
                 40
 
@@ -74,13 +74,63 @@ public class Player extends Entitiy {
 
     }
 
+    public void createAnimationIdle(){
+
+      
+
+        for (int index = 0; index < idleFrames.length; index++ ){
+
+            idleFrames[index] = spriteSheet.getSubimage(
+                index * 48,
+                0 * 40, 
+                48, 
+                40
+
+            );
+
+            
+
+        }
+
+    }
+
+    public void createAnimationRight(){
+
+        for (int index = 0; index < walkRightFrames.length; index++){
+
+            walkRightFrames[index] = spriteSheet.getSubimage(
+                index * 48,
+                5 * 40, 
+                48, 
+                40
+
+            );
+
+        }
+    }
+
+    public void createAnimationLeft(){
+
+        for (int index = 0; index < walkLeftFrames.length; index++){
+
+            walkLeftFrames[index] = spriteSheet.getSubimage(
+                index * 48,
+                5 * 40, 
+                48, 
+                40
+
+            );
+
+        }
+    }
+
     public void getPlayerImage() {
 
         try{
 
             spriteSheet = ImageIO.read(
                 
-                getClass().getResourceAsStream("/Player/player.png")
+                getClass().getResourceAsStream("/res/Player/player.png")
             );
 
         }catch(IOException e){
@@ -93,8 +143,6 @@ public class Player extends Entitiy {
     }
 
     public void update(){
-
-        
 
         if(keyH.upPressed == true){
             y -= speed; 
@@ -110,13 +158,22 @@ public class Player extends Entitiy {
 
         } else if(keyH.leftPressed == true){
             x -= speed;
+            direction = "left";
+            moving = true;
+            createAnimationLeft();
 
         }else if(keyH.rightPressed == true){
             x += speed;
+            direction = "right";
+            moving = true;
+            createAnimationRight();
+
         } else{
+
             downwardMoving = false;
             upwardMoving = false;
-            
+            direction = "idle";
+            createAnimationIdle();
         }
 
         if (moving) {
@@ -126,21 +183,35 @@ public class Player extends Entitiy {
         
                 if ("down".equals(direction)) {
                     downFrameIndex = (downFrameIndex + 1) % walkDownFrames.length;
+                    idleFrameIndex = 0;
+
                 } else if ("up".equals(direction)) {
                     upFrameIndex = (upFrameIndex + 1) % walkUpFrames.length;
+                    idleFrameIndex = 0;
+
+                } else if("right".equals(direction)){
+                    rightFrameIndex = (rightFrameIndex + 1) % walkRightFrames.length;
+                    idleFrameIndex = 0;
+                
+                }else if("left".equals(direction)){
+                    leftFrameIndex = (leftFrameIndex + 1) % walkLeftFrames.length;
+                    idleFrameIndex = 0;
+                    
+                }else if ("idle".equals(direction)){
+                    idleFrameIndex = (idleFrameIndex + 1) % idleFrames.length;
+                    downFrameIndex = 0;
+                    upFrameIndex = 0;
+                    rightFrameIndex = 0;
                 }
             }
-        } else {
-            downFrameIndex = 0;
-            upFrameIndex = 0;
         }
-            
+         
 
     }
 
     public void draw(Graphics2D g2){
 
-        int scale = 3;
+        int scale = 2;
 
         int w = gp.tileSize * scale;
         int h = gp.tileSize * scale;
@@ -155,6 +226,17 @@ public class Player extends Entitiy {
         case "down":
             frame = walkDownFrames[downFrameIndex];
             break;
+        case "right":
+            frame = walkRightFrames[rightFrameIndex];
+        break;
+        case "left":
+            g2.drawImage(walkLeftFrames[leftFrameIndex],
+                x + w, y,
+                -w, h,
+                null);
+        break;
+        case "idle":
+            frame = idleFrames[idleFrameIndex];
         
         } 
 
