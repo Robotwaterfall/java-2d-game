@@ -34,8 +34,8 @@ public class Player extends Entitiy {
 
     public void setDefaultValues(){
 
-        worldX = gp.tileSize * 23;
-        worldY = gp.tileSize * 21;
+        worldX = gp.tileSize * 19;
+        worldY = gp.tileSize * 22;
         speed = 4;
     }
 
