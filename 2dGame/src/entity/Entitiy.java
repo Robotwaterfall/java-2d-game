@@ -4,7 +4,7 @@ import java.awt.image.BufferedImage;
 
 public class Entitiy {
 
-    public int x, y;
+    public int worldX, worldY;
     public int speed;
 
     public boolean downwardMoving = false;

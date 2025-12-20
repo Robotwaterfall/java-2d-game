@@ -15,10 +15,16 @@ public class Player extends Entitiy {
     GamePanel gp;
     KeyHandler keyH;
 
+    public final int screenX;
+    public final int screenY;
+
 
     public Player(GamePanel gp, KeyHandler keyH){
         this.gp = gp;
         this.keyH = keyH;
+
+        screenX = gp.screenWidth/2 - (gp.tileSize/2);
+        screenY = gp.screenHeight/2 - (gp.tileSize/2); // half way of the screen
 
         setDefaultValues();
         getPlayerImage();// 1. load spriteSheet
@@ -28,8 +34,8 @@ public class Player extends Entitiy {
 
     public void setDefaultValues(){
 
-        x = 100;
-        y = 100;
+        worldX = gp.tileSize * 23;
+        worldY = gp.tileSize * 21;
         speed = 4;
     }
 
@@ -41,9 +47,9 @@ public class Player extends Entitiy {
 
             walkDownFrames[index] = spriteSheet.getSubimage(
                 index * 48,
-                4 * 40, //row 5
+                4 * 37, //row 5
                 48, 
-                40
+                37
 
             );
 
@@ -82,9 +88,9 @@ public class Player extends Entitiy {
 
             idleFrames[index] = spriteSheet.getSubimage(
                 index * 48,
-                0 * 40, 
+                0 * 42, 
                 48, 
-                40
+                42
 
             );
 
@@ -100,9 +106,9 @@ public class Player extends Entitiy {
 
             walkRightFrames[index] = spriteSheet.getSubimage(
                 index * 48,
-                5 * 40, 
+                5 * 39, 
                 48, 
-                40
+                39
 
             );
 
@@ -115,9 +121,9 @@ public class Player extends Entitiy {
 
             walkLeftFrames[index] = spriteSheet.getSubimage(
                 index * 48,
-                5 * 40, 
+                5 * 39, 
                 48, 
-                40
+                39
 
             );
 
@@ -145,25 +151,25 @@ public class Player extends Entitiy {
     public void update(){
 
         if(keyH.upPressed == true){
-            y -= speed; 
+            worldY -= speed; 
             direction = "up";
             moving = true;
             createAnimationUp();
             
         } else if(keyH.downPressed == true){
-            y += speed; 
+            worldY += speed; 
             direction = "down";
             moving = true;
             createAnimationDown();
 
         } else if(keyH.leftPressed == true){
-            x -= speed;
+            worldX -= speed;
             direction = "left";
             moving = true;
             createAnimationLeft();
 
         }else if(keyH.rightPressed == true){
-            x += speed;
+            worldX += speed;
             direction = "right";
             moving = true;
             createAnimationRight();
@@ -231,7 +237,7 @@ public class Player extends Entitiy {
         break;
         case "left":
             g2.drawImage(walkLeftFrames[leftFrameIndex],
-                x + w, y,
+                screenX + w, screenY,
                 -w, h,
                 null);
         break;
@@ -240,7 +246,7 @@ public class Player extends Entitiy {
         
         } 
 
-        g2.drawImage(frame, x, y, w, h, null);
+        g2.drawImage(frame, screenX, screenY, w, h, null);
 
     }
 }
