@@ -24,12 +24,15 @@ public class Entitiy {
     public BufferedImage[] walkRightFrames = new BufferedImage[6];
     public BufferedImage[] walkLeftFrames = new BufferedImage[6];
 
+    public BufferedImage[] attackFrames = new BufferedImage[4];
+
 
     int downFrameIndex = 0;
     int upFrameIndex   = 0;
     int idleFrameIndex = 0;
     int rightFrameIndex = 0;
     int leftFrameIndex = 0;
+    int attackFrameIndex = 0;
 
     int frameCounter   = 0;
     int frameDelay     = 10;   // bigger = slower animation

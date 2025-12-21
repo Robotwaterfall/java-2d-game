@@ -130,6 +130,23 @@ public class Player extends Entitiy {
         }
     }
 
+    public void createAnimationAttack(){
+
+        for (int index = 0; index < attackFrames.length; index++){
+
+            attackFrames[index] = spriteSheet.getSubimage(
+                index * 48,
+                8 * 37, 
+                48, 
+                37
+
+            );
+
+        }
+    }
+
+
+
     public void getPlayerImage() {
 
         try{
@@ -174,7 +191,13 @@ public class Player extends Entitiy {
             moving = true;
             createAnimationRight();
 
-        } else{
+        } else if(keyH.attackPressed == true){
+            direction = "attack";
+            moving = true;
+            createAnimationAttack();
+
+
+        }else{
 
             downwardMoving = false;
             upwardMoving = false;
@@ -208,6 +231,10 @@ public class Player extends Entitiy {
                     downFrameIndex = 0;
                     upFrameIndex = 0;
                     rightFrameIndex = 0;
+                }else if("attack".equals(direction)){
+                    attackFrameIndex = (attackFrameIndex + 1) % attackFrames.length;
+                    idleFrameIndex = 0;
+
                 }
             }
         }
@@ -240,6 +267,9 @@ public class Player extends Entitiy {
                 screenX + w, screenY,
                 -w, h,
                 null);
+        break;
+        case "attack":
+            frame = attackFrames[attackFrameIndex];
         break;
         case "idle":
             frame = idleFrames[idleFrameIndex];
