@@ -44,7 +44,7 @@ public class Player extends Entitiy {
 
     public void setDefaultValues(){
 
-        worldX = gp.tileSize * 19;
+        worldX = gp.tileSize * 23;
         worldY = gp.tileSize * 22;
         speed = 4;
     }
@@ -226,7 +226,7 @@ public class Player extends Entitiy {
                 case "down":  worldY += speed; break;
                 case "left":  worldX -= speed; break;
                 case "right": worldX += speed; break;
-            }
+            }     
         }else{
             moving = false;
         }
