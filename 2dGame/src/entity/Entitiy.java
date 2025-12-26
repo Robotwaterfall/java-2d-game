@@ -1,5 +1,6 @@
 package entity;
 
+import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 
 public class Entitiy {
@@ -36,6 +37,9 @@ public class Entitiy {
 
     int frameCounter   = 0;
     int frameDelay     = 10;   // bigger = slower animation
+
+    public Rectangle solidArea;
+    public boolean collisionOn = false;
 
 
 }

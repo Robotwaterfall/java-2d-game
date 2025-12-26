@@ -2,6 +2,7 @@ package entity;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
+import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 
@@ -10,6 +11,9 @@ import javax.imageio.ImageIO;
 import entity.Entitiy;
 import main.GamePanel;
 import main.KeyHandler;
+import main.collisionChecker;
+
+
 
 public class Player extends Entitiy {
     GamePanel gp;
@@ -25,6 +29,12 @@ public class Player extends Entitiy {
 
         screenX = gp.screenWidth/2 - (gp.tileSize/2);
         screenY = gp.screenHeight/2 - (gp.tileSize/2); // half way of the screen
+
+        solidArea = new Rectangle();
+        solidArea.x = 50;
+        solidArea.y = 60;
+        solidArea.height = 32;
+        solidArea.height = 32;
 
         setDefaultValues();
         getPlayerImage();// 1. load spriteSheet
@@ -168,25 +178,25 @@ public class Player extends Entitiy {
     public void update(){
 
         if(keyH.upPressed == true){
-            worldY -= speed; 
+            
             direction = "up";
             moving = true;
             createAnimationUp();
             
         } else if(keyH.downPressed == true){
-            worldY += speed; 
+           
             direction = "down";
             moving = true;
             createAnimationDown();
 
         } else if(keyH.leftPressed == true){
-            worldX -= speed;
+            
             direction = "left";
             moving = true;
             createAnimationLeft();
 
         }else if(keyH.rightPressed == true){
-            worldX += speed;
+            
             direction = "right";
             moving = true;
             createAnimationRight();
@@ -203,6 +213,22 @@ public class Player extends Entitiy {
             upwardMoving = false;
             direction = "idle";
             createAnimationIdle();
+        }
+
+        // CHECK TILE COLLISION
+        collisionOn = false;
+        gp.collisionCheck.checkTile(this);
+
+        //IF COLLISION IS FALSE, PLAYER CAN MOVE
+        if(collisionOn == false){
+            switch(direction){
+                case "up":    worldY -= speed; break;
+                case "down":  worldY += speed; break;
+                case "left":  worldX -= speed; break;
+                case "right": worldX += speed; break;
+            }
+        }else{
+            moving = false;
         }
 
         if (moving) {
