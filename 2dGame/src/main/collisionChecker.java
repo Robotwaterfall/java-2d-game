@@ -2,11 +2,11 @@ package main;
 
 import entity.Entitiy;
 
-public class collisionChecker {
+public class CollisionChecker {
 
     GamePanel gp;
 
-    public collisionChecker(GamePanel gp){
+    public CollisionChecker(GamePanel gp){
 
         this.gp = gp;
 

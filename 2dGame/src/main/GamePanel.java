@@ -34,7 +34,7 @@ public class GamePanel extends JPanel implements Runnable{
     public TileManager tileM = new TileManager(this);
     KeyHandler keyH = new KeyHandler();
     Thread gameThread; //something you can start and stop
-    public collisionChecker collisionCheck = new collisionChecker(this);
+    public CollisionChecker collisionCheck = new CollisionChecker(this);
     public AssetSetter aSetter = new AssetSetter(this);
     public Player player = new Player(this, keyH); 
     public SuperObject obj[] = new SuperObject[10]; // this # represents the amount of objects on the screen at once

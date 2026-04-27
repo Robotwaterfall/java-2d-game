@@ -11,7 +11,7 @@ import javax.imageio.ImageIO;
 import entity.Entitiy;
 import main.GamePanel;
 import main.KeyHandler;
-import main.collisionChecker;
+import main.CollisionChecker;
 
 
 
